@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "404691657162",
+    "project_id": "realtime-database-e48e2",
+    "storage_bucket": "realtime-database-e48e2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404691657162:android:7fa00a1a1eed8afcd72f33",
+        "android_client_info": {
+          "package_name": "com.example.realtime_database"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVbVJPpFZhYYYjKgjcfcvEWyhGFT8y5qI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
