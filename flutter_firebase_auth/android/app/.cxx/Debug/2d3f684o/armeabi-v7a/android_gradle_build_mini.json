@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "C:\\devvvv\\flutter\\packages\\flutter_tools\\gradle\\src\\main\\groovy\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Users\\Asus TUF\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "C:\\Users\\Asus TUF\\Desktop\\Project_Flutter\\Firebase_Project\\flutter_firebase_auth\\android\\app\\.cxx\\Debug\\2d3f684o\\armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Users\\Asus TUF\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "C:\\Users\\Asus TUF\\Desktop\\Project_Flutter\\Firebase_Project\\flutter_firebase_auth\\android\\app\\.cxx\\Debug\\2d3f684o\\armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "678186320498",
+    "project_id": "fourth-physics-450708-s2",
+    "storage_bucket": "fourth-physics-450708-s2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:678186320498:android:d2bf57842c9ff425adf8eb",
+        "android_client_info": {
+          "package_name": "com.example.flutter_firebase_auth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOldVNztGQfPu7vyqJYt-4LkSjUMtrcCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
