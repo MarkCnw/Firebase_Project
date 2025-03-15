@@ -51,4 +51,7 @@ class AuthServicews {
     }
     return res;
   }
+  Future<void> sigOut() async {
+    await _auth.signOut();
+  }
 }

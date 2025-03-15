@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_auth/Login%20SignUp/Widget/button.dart';
 import 'package:flutter_firebase_auth/Login%20SignUp/Widget/text_field.dart';
+import 'package:flutter_firebase_auth/Password/forgot_password.dart';
 
 import '../Service/authentication.dart';
 import '../Widget/snackbar.dart';
@@ -72,20 +73,8 @@ class _SignupScreenState extends State<LoginScreen> {
                 hintText: "Enter your password",
                 icon: Icons.lock,
                 ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 35),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  "Forgot Password?",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue),
-                ),
-              ),
-            ),
             MyButton(onTab: loginUser, text: "Log In"),
+            ForgotPassword(),
             SizedBox(height: height / 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
