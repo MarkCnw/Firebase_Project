@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_auth/Login%20SignUp/Widget/button.dart';
 import 'package:flutter_firebase_auth/Login%20SignUp/Widget/text_field.dart';
+import 'package:flutter_firebase_auth/Login%20With%20Google/google_auth.dart';
 import 'package:flutter_firebase_auth/Password/forgot_password.dart';
+import 'package:flutter_firebase_auth/Phone/phone_login.dart';
 
 import '../Service/authentication.dart';
 import '../Widget/snackbar.dart';
@@ -84,7 +86,10 @@ class _SignupScreenState extends State<LoginScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueGrey,
                 ),
-                  onPressed: () {},
+                  onPressed: ()async {
+                    await FirebaseServices().signInWithGoogle();
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
+                  },
                   child: Row(
                     children: [
                       Padding(
@@ -105,6 +110,7 @@ class _SignupScreenState extends State<LoginScreen> {
                     ],
                   )),
             ),
+            PhoneAuthentication(),
             Padding(
               padding: const EdgeInsets.only(top: 10, left: 100),
               child: Row(

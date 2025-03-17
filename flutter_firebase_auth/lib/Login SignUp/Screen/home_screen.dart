@@ -1,6 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_auth/Login%20SignUp/Service/authentication.dart';
 
+import '../../Login With Google/google_auth.dart';
 import '../Widget/button.dart';
 import 'login.dart';
 
@@ -10,29 +11,29 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              "Crongratulations\n You have successfully logged in",
+              "Congratulation\nYou have successfully Login",
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
+
             MyButton(
-                onTab: ()async {
-                  await AuthServicews().sigOut();
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => LoginScreen(),
-                  ));
+                onTab: () async {
+                  await FirebaseServices().googleSignOut();
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                  );
                 },
-                text: "Log out",
-            )
+                text: "Log Out",),
+            Image.network("${FirebaseAuth.instance.currentUser!.photoURL}",),
+            Text("${FirebaseAuth.instance.currentUser!.email}"),
+            Text("${FirebaseAuth.instance.currentUser!.displayName}")
           ],
         ),
       ),

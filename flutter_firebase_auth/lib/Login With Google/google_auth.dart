@@ -22,5 +22,8 @@ class FirebaseServices {
     }on FirebaseAuthException catch (e) {
       print(e.toString());
     }
-}
+  }
+  googleSignOut() async {
+    await googlsSignIn.signOut();
+  }
 }
