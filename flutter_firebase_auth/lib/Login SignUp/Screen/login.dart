@@ -59,8 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
             child: Column(
               children: [
-                SizedBox(height: height * 0.05),
-                Image.asset('images/picture2.png', height: height * 0.3),
+                SizedBox(height: height * 0.01),
+                Image.asset('images/picture2.png', height: height * 0.26),
                 SizedBox(height: 20),
                 TextFieldInput(
                   textEditingController: emailController,
