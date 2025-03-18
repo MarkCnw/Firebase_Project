@@ -20,8 +20,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController nameController = TextEditingController();
   bool isLoading = false;
 
-
-  void despose() {
+  @override
+  void dispose() {
     emailController.dispose();
     passwordController.dispose();
     nameController.dispose();
@@ -29,83 +29,95 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void signUpUser() async {
+    setState(() => isLoading = true);
     String res = await AuthServicews().signUpUser(
-        email: emailController.text,
-        password: passwordController.text,
-        name: nameController.text);
+      email: emailController.text,
+      password: passwordController.text,
+      name: nameController.text,
+    );
 
     if (res == "success") {
-      setState(() {
-        isLoading = true;
-      });
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => HomeScreen(),
-      ),
-    );
-    }else{
-      setState(() {
-        isLoading = false;
-      });
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    } else {
       showSnackbar(context, res);
+      setState(() => isLoading = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[900],
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
-          child: SizedBox(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: double.infinity,
-              height: height / 2.7,
-              child: Image.asset('images/picture3.png'),
-            ),
-            TextFieldInput(
-                textEditingController: nameController,
-                hintText: "Enter your name",
-                icon: Icons.person),
-            TextFieldInput(
-                textEditingController: emailController,
-                hintText: "Enter your email",
-                icon: Icons.email),
-            TextFieldInput(
-                textEditingController: passwordController,
-                hintText: "Enter your password",
-                icon: Icons.lock,
-                isPass: true
-                ),
-            MyButton(onTab: signUpUser, text: "Sign Up"),
-            SizedBox(height: height / 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "Already have an account?",
-                  style: TextStyle(fontSize: 16),
+                SizedBox(height: height * 0.05),
+                Image.asset('images/picture3.png', height: height * 0.3),
+                SizedBox(height: 20),
+                TextFieldInput(
+                  textEditingController: nameController,
+                  hintText: "Enter your name",
+                  icon: Icons.person,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LoginScreen()));
-                  },
-                  child: Text(
-                    "Login",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                )
+                SizedBox(height: 10),
+                TextFieldInput(
+                  textEditingController: emailController,
+                  hintText: "Enter your email",
+                  icon: Icons.email,
+                ),
+                SizedBox(height: 10),
+                TextFieldInput(
+                  isPass: true,
+                  textEditingController: passwordController,
+                  hintText: "Enter your password",
+                  icon: Icons.lock,
+                ),
+                SizedBox(height: 20),
+                isLoading
+                    ? CircularProgressIndicator(color: Colors.blueAccent)
+                    : MyButton(onTab: signUpUser, text: "Sign Up"),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account?",
+                      style: TextStyle(fontSize: 16, color: Colors.white70),
+                    ),
+                    SizedBox(width: 5),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginScreen()),
+                        );
+                      },
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.blueAccent,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
               ],
-            )
-          ],
+            ),
+          ),
         ),
-      )),
+      ),
     );
   }
 }

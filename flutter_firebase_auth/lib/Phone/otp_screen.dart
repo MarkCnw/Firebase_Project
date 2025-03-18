@@ -8,14 +8,13 @@ import '../Login SignUp/Screen/home_screen.dart';
 class OTPScreen extends StatefulWidget {
   final String verificationId;
   const OTPScreen({super.key, required this.verificationId});
-
   @override
   State<OTPScreen> createState() => _OTPScreenState();
 }
 
 class _OTPScreenState extends State<OTPScreen> {
   TextEditingController otpController = TextEditingController();
-  // we have also add the circular profressIndicator during waiting time
+ 
   bool isLoadin = false;
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class _OTPScreenState extends State<OTPScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            Image.asset("images/otpimage.jpg"),
+            Image.asset("images/otp.jpg"),
             const Text(
               "OTP Verification",
               style: TextStyle(

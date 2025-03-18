@@ -1,5 +1,3 @@
-
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_auth/Phone/otp_screen.dart';
@@ -21,7 +19,6 @@ class _PhoneAuthenticationState extends State<PhoneAuthentication> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
         onPressed: () {
-          // now, we make => when user click on sign in with phone button open the dialog box wehre we enter the phone number,
           myDialogBox(context);
         },
         child: Row(
@@ -114,7 +111,7 @@ class _PhoneAuthenticationState extends State<PhoneAuthentication> {
                                 print(error);
                               },
                               codeSent: (verificationId, forceResendingToken) {
-                                // if code is send successfulley then neavigate to next screen
+                                
                                 setState(() {
                                   isLoadin = false;
                                 });
