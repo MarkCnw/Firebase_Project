@@ -89,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
+                
                   onPressed: () async {
                     await FirebaseServices().signInWithGoogle();
                     Navigator.pushReplacement(
@@ -105,6 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                   ),
                 ),
+                
                 SizedBox(height: 20),
                 PhoneAuthentication(),
                 SizedBox(height: 20),
@@ -136,6 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 20),
               ],
+              
             ),
           ),
         ),

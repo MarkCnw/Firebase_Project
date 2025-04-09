@@ -23,6 +23,7 @@ class FirebaseServices {
       print(e.toString());
     }
   }
+  
   googleSignOut() async {
     await googlsSignIn.signOut();
   }
