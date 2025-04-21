@@ -8,7 +8,7 @@ plugins {
 android {
     namespace = "com.example.netflix_tmdb_api"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973" // ✅ ใส่ตรงนี้
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

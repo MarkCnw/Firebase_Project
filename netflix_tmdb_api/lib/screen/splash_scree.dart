@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:netflix_tmdb_api/screen/app_navbar_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -9,9 +13,18 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
+  void initState() {
+    super.initState();
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => AppNavbarScreen()),
+      );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      
-    );
+    return Center(child: Lottie.asset("assets/netflix.json"));
   }
 }
