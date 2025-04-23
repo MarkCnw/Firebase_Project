@@ -2,7 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_tmdb_api/common/utils.dart';
 import 'package:netflix_tmdb_api/model/movie_model.dart';
+import 'package:netflix_tmdb_api/model/poppular_tv_series.dart';
+import 'package:netflix_tmdb_api/model/top_rated_movies.dart';
+import 'package:netflix_tmdb_api/model/trending_model.dart';
 import 'package:netflix_tmdb_api/model/upcoming_movie.dart';
+import 'package:netflix_tmdb_api/screen/movie_detail_screen.dart';
 import 'package:netflix_tmdb_api/service/api_service.dart';
 
 class NetflixHomeScreen extends StatefulWidget {
@@ -16,10 +20,16 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
   final ApiServices apiServices = ApiServices();
   late Future<Movie?> movieData;
   late Future<UpcomingMovies?> upcomingMovieData;
+  late Future<TopRatedMovies?> topRatedMovieData;
+  late Future<TrendingMovies?> trendingMovieData;
+  late Future<PoppularTVseries?> poppularTVseriesData;
   @override
   void initState() {
     movieData = apiServices.fetchMovies();
     upcomingMovieData = apiServices.upcomingMovies();
+    topRatedMovieData = apiServices.topRateMovies();
+    trendingMovieData = apiServices.trendingMovies();
+    poppularTVseriesData = apiServices.popularTvSeries();
     super.initState();
   }
 
@@ -40,9 +50,17 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
                   Spacer(),
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.search, size: 27, color: Colors.white),
+                    icon: Icon(
+                      Icons.search,
+                      size: 27,
+                      color: Colors.white,
+                    ),
                   ),
-                  Icon(Icons.download_sharp, size: 27, color: Colors.white),
+                  Icon(
+                    Icons.download_sharp,
+                    size: 27,
+                    color: Colors.white,
+                  ),
                   SizedBox(width: 10),
                   Icon(Icons.cast, size: 27, color: Colors.white),
                 ],
@@ -97,7 +115,10 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Icon(Icons.keyboard_arrow_down, color: Colors.white),
+                        Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.white,
+                        ),
                       ],
                     ),
                   ),
@@ -122,7 +143,9 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
                         } else if (snapshot.hasError) {
                           return Center(
                             child: Text("Error:${snapshot.error}"),
@@ -137,7 +160,17 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
                               itemBuilder: (context, index) {
                                 final movie = movies[index];
                                 return GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => MovieDetailScreen(
+                                              movieId: movie.id,
+                                            ),
+                                      ),
+                                    );
+                                  },
                                   child: Container(
                                     height: 530,
                                     width: 388,
@@ -236,7 +269,23 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
               ),
             ),
             SizedBox(height: 30),
-            moviesTypes(future: upcomingMovieData, movieType: "Upcoming Movies",isReverse: true),
+            moviesTypes(
+              future: trendingMovieData,
+              movieType: "Trending Movies on Netflix",
+            ),
+            moviesTypes(
+              future: upcomingMovieData,
+              movieType: "Upcoming Movies",
+              isReverse: true,
+            ),
+            moviesTypes(
+              future: poppularTVseriesData,
+              movieType: "Popular TV Series - Most-Watch For U",
+            ),
+            moviesTypes(
+              future: topRatedMovieData,
+              movieType: "Top Rated Movies",
+            ),
           ],
         ),
       ),
@@ -265,7 +314,7 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
             height: 180,
             width: double.maxFinite,
             child: FutureBuilder(
-              future: movieData,
+              future: future, //303
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -274,6 +323,7 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
                 } else if (snapshot.hasData) {
                   final movies = snapshot.data!.results;
                   return ListView.builder(
+                    reverse: isReverse,
                     itemCount: movies.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {

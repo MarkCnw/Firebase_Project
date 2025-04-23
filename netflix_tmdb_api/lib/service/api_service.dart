@@ -2,7 +2,11 @@
 
 import 'package:http/http.dart' as http;
 import 'package:netflix_tmdb_api/common/utils.dart';
+import 'package:netflix_tmdb_api/model/movie_detail.dart';
 import 'package:netflix_tmdb_api/model/movie_model.dart';
+import 'package:netflix_tmdb_api/model/poppular_tv_series.dart';
+import 'package:netflix_tmdb_api/model/top_rated_movies.dart';
+import 'package:netflix_tmdb_api/model/trending_model.dart';
 import 'package:netflix_tmdb_api/model/upcoming_movie.dart';
 
 var key = "?api_key=$apiKey";
@@ -31,6 +35,70 @@ class ApiServices {
       final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
         return upcomingMoviesFromJson(response.body);
+      } else {
+        throw Exception("Failed to load movies");
+      }
+    } catch (e) {
+      print("Error fetching movies: $e");
+      return null;
+    }
+  }
+
+  Future<TrendingMovies?>trendingMovies()async{
+    try {
+      const endPoint = "trending/movie/day";
+      final apiUrl = "$baseUrl$endPoint$key";
+      final response = await http.get(Uri.parse(apiUrl));
+      if (response.statusCode == 200) {
+        return trendingMoviesFromJson(response.body);
+      } else {
+        throw Exception("Failed to load movies");
+      }
+    } catch (e) {
+      print("Error fetching movies: $e");
+      return null;
+    }
+  }
+
+   Future<TopRatedMovies?>topRateMovies()async{
+    try {
+      const endPoint = "movie/top_rated";
+      final apiUrl = "$baseUrl$endPoint$key";
+      final response = await http.get(Uri.parse(apiUrl));
+      if (response.statusCode == 200) {
+        return topRatedMoviesFromJson(response.body);
+      } else {
+        throw Exception("Failed to load movies");
+      }
+    } catch (e) {
+      print("Error fetching movies: $e");
+      return null;
+    }
+  }
+
+  Future<PoppularTVseries?>popularTvSeries()async{
+    try {
+      const endPoint = "tv/popular";
+      final apiUrl = "$baseUrl$endPoint$key";
+      final response = await http.get(Uri.parse(apiUrl));
+      if (response.statusCode == 200) {
+        return poppularTVseriesFromJson(response.body);
+      } else {
+        throw Exception("Failed to load movies");
+      }
+    } catch (e) {
+      print("Error fetching movies: $e");
+      return null;
+    }
+  }
+
+   Future<MovieDetail?>movieDetail(int movieId)async{
+    try {
+      final endPoint = "movie/$movieId";
+      final apiUrl = "$baseUrl$endPoint$key";
+      final response = await http.get(Uri.parse(apiUrl));
+      if (response.statusCode == 200) {
+        return movieDetailFromJson(response.body);
       } else {
         throw Exception("Failed to load movies");
       }
