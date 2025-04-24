@@ -1,5 +1,3 @@
-
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_tmdb_api/common/utils.dart';
@@ -47,10 +45,34 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.cover,
+
                             image: CachedNetworkImageProvider(
                               "$imageUrl${movie?.posterPath}",
                             ),
                           ),
+                        ),
+                      ),
+                      Positioned(
+                        right: 15,
+                        top: 50,
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Colors.black54,
+                              child: GestureDetector(
+                                onTap: Navigator.of(context).pop,
+                                child: Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            CircleAvatar(
+                              backgroundColor: Colors.black54,
+                              child: Icon(Icons.cast, color: Colors.white),
+                            ),
+                          ],
                         ),
                       ),
                     ],
