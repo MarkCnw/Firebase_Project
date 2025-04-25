@@ -1,9 +1,8 @@
-
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_tmdb_api/common/utils.dart';
 import 'package:netflix_tmdb_api/model/movie_detail.dart';
+import 'package:netflix_tmdb_api/model/movier_recommedetion.dart';
 import 'package:netflix_tmdb_api/service/api_service.dart';
 
 class MovieDetailScreen extends StatefulWidget {
@@ -17,6 +16,7 @@ class MovieDetailScreen extends StatefulWidget {
 class _MovieDetailScreenState extends State<MovieDetailScreen> {
   final ApiServices apiServices = ApiServices();
   late Future<MovieDetail?> movieDetail;
+  late Future<MovieRecommedations?> movieRecommedation;
   @override
   void initState() {
     fetchMovieData();
@@ -25,6 +25,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
 
   fetchMovieData() {
     movieDetail = apiServices.movieDetail(widget.movieId);
+    movieRecommedation = apiServices.movieRecommedetion(widget.movieId);
     setState(() {});
   }
 
@@ -45,14 +46,16 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final movie = snapshot.data!;
-              String generesText = movie.genres.map((genere) => genere.name).join(", ");
+              String generesText = movie.genres
+                  .map((genere) => genere.name)
+                  .join(", ");
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Stack(
                     children: [
                       Container(
-                        height: size.height * 0.45,
+                        height: size.height * 0.4,
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.cover,
@@ -91,14 +94,15 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         right: 100,
                         left: 100,
                         child: Icon(
-                          Icons.play_circle_outline,size: 60,
+                          Icons.play_circle_outline,
+                          size: 60,
                           color: Colors.white,
                         ),
                       ),
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 20, left: 10, right: 10),
+                    padding: EdgeInsets.only(top: 10, left: 10, right: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -217,25 +221,140 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                   SizedBox(height: 15),
                   Text(
                     generesText,
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.grey,
-                    ),
+                    style: TextStyle(fontSize: 17, color: Colors.grey),
                   ),
-                  SizedBox(height: 10),
+
                   Text(
                     movie.overview,
                     maxLines: 5,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  )
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Column(
+                        children: [
+                          Icon(Icons.add, size: 40, color: Colors.white),
+                          Text(
+                            "My List",
+                            style: TextStyle(
+                              color: Colors.white,
+                              height: 0.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Icon(
+                            Icons.thumb_up,
+                            size: 40,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            "Rate",
+                            style: TextStyle(
+                              color: Colors.white,
+                              height: 0.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Icon(Icons.share, size: 45, color: Colors.white),
+                          Text(
+                            "My List",
+                            style: TextStyle(
+                              color: Colors.white,
+                              height: 0.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  FutureBuilder(
+                    future: movieRecommedation,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      if (snapshot.hasData && snapshot.data != null) {
+                        final movie = snapshot.data!;
+                        return movie.results.isEmpty
+                            ? SizedBox()
+                            : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "More Like This",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                SizedBox(
+                                  height: 200,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: true,
+                                    padding: EdgeInsets.zero,
+                                    itemCount: movie.results.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          right: 5,
+                                        ),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder:
+                                                    (context) =>
+                                                        MovieDetailScreen(
+                                                          movieId:
+                                                              movie.results[index].id,
+                                                        ),
+                                              ),
+                                            );
+                                          },
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                "$imageUrl${movie.results[index].posterPath}",
+                                            height: 200,
+                                            width: 150,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            );
+                      }
+                      return Text(
+                        "Something went wrong",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    },
+                  ),
                 ],
               );
             }
-            return Text("Something went wrong");
+            return SizedBox();
           },
         ),
       ),

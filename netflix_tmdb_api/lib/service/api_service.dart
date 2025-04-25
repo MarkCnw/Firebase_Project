@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:netflix_tmdb_api/common/utils.dart';
 import 'package:netflix_tmdb_api/model/movie_detail.dart';
 import 'package:netflix_tmdb_api/model/movie_model.dart';
+import 'package:netflix_tmdb_api/model/movier_recommedetion.dart';
 import 'package:netflix_tmdb_api/model/poppular_tv_series.dart';
 import 'package:netflix_tmdb_api/model/top_rated_movies.dart';
 import 'package:netflix_tmdb_api/model/trending_model.dart';
@@ -12,7 +13,7 @@ import 'package:netflix_tmdb_api/model/upcoming_movie.dart';
 var key = "?api_key=$apiKey";
 
 class ApiServices {
-  Future<Movie?>fetchMovies()async{
+  Future<Movie?> fetchMovies() async {
     try {
       const endPoint = "movie/now_playing";
       final apiUrl = "$baseUrl$endPoint$key";
@@ -28,7 +29,7 @@ class ApiServices {
     }
   }
 
-   Future<UpcomingMovies?>upcomingMovies()async{
+  Future<UpcomingMovies?> upcomingMovies() async {
     try {
       const endPoint = "movie/upcoming";
       final apiUrl = "$baseUrl$endPoint$key";
@@ -44,7 +45,7 @@ class ApiServices {
     }
   }
 
-  Future<TrendingMovies?>trendingMovies()async{
+  Future<TrendingMovies?> trendingMovies() async {
     try {
       const endPoint = "trending/movie/day";
       final apiUrl = "$baseUrl$endPoint$key";
@@ -60,7 +61,7 @@ class ApiServices {
     }
   }
 
-   Future<TopRatedMovies?>topRateMovies()async{
+  Future<TopRatedMovies?> topRateMovies() async {
     try {
       const endPoint = "movie/top_rated";
       final apiUrl = "$baseUrl$endPoint$key";
@@ -76,7 +77,7 @@ class ApiServices {
     }
   }
 
-  Future<PoppularTVseries?>popularTvSeries()async{
+  Future<PoppularTVseries?> popularTvSeries() async {
     try {
       const endPoint = "tv/popular";
       final apiUrl = "$baseUrl$endPoint$key";
@@ -92,13 +93,29 @@ class ApiServices {
     }
   }
 
-   Future<MovieDetail?>movieDetail(int movieId)async{
+  Future<MovieDetail?> movieDetail(int movieId) async {
     try {
       final endPoint = "movie/$movieId";
       final apiUrl = "$baseUrl$endPoint$key";
       final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
         return movieDetailFromJson(response.body);
+      } else {
+        throw Exception("Failed to load movies");
+      }
+    } catch (e) {
+      print("Error fetching movies: $e");
+      return null;
+    }
+  }
+
+  Future<MovieRecommedations?> movieRecommedetion(int movieId) async {
+    try {
+      final endPoint = "movie/$movieId/recommendations";
+      final apiUrl = "$baseUrl$endPoint$key";
+      final response = await http.get(Uri.parse(apiUrl));
+      if (response.statusCode == 200) {
+        return movieRecommedationsFromJson(response.body);
       } else {
         throw Exception("Failed to load movies");
       }

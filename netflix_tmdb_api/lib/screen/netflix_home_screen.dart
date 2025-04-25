@@ -331,7 +331,16 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
                       return Padding(
                         padding: const EdgeInsets.only(right: 8),
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MovieDetailScreen(
+                                movieId: movie.id,
+                              ),
+                            ),
+                          );
+                          },
                           child: Container(
                             width: 130,
                             decoration: BoxDecoration(
