@@ -52,54 +52,56 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Stack(
-                    children: [
-                      Container(
-                        height: size.height * 0.4,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: CachedNetworkImageProvider(
-                              "$imageUrl${movie.posterPath}",
+                  SafeArea(
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: size.height * 0.4,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: CachedNetworkImageProvider(
+                                "$imageUrl${movie.posterPath}",
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        right: 15,
-                        top: 50,
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.black54,
-                              child: GestureDetector(
-                                onTap: Navigator.of(context).pop,
-                                child: Icon(
-                                  Icons.close,
-                                  color: Colors.white,
+                        Positioned(
+                          right: 15,
+                          top: 20,
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.black87,
+                                child: GestureDetector(
+                                  onTap: Navigator.of(context).pop,
+                                  child: Icon(
+                                    Icons.close,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(width: 8),
-                            CircleAvatar(
-                              backgroundColor: Colors.black54,
-                              child: Icon(Icons.cast, color: Colors.white),
-                            ),
-                          ],
+                              SizedBox(width: 8),
+                              CircleAvatar(
+                                backgroundColor: Colors.black54,
+                                child: Icon(Icons.cast, color: Colors.white),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Positioned(
-                        top: 100,
-                        bottom: 100,
-                        right: 100,
-                        left: 100,
-                        child: Icon(
-                          Icons.play_circle_outline,
-                          size: 60,
-                          color: Colors.white,
+                        Positioned(
+                          top: 100,
+                          bottom: 100,
+                          right: 100,
+                          left: 100,
+                          child: Icon(
+                            Icons.play_circle_outline,
+                            size: 60,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 10, left: 10, right: 10),
