@@ -6,6 +6,7 @@ import 'package:netflix_tmdb_api/model/movie_detail.dart';
 import 'package:netflix_tmdb_api/model/movie_model.dart';
 import 'package:netflix_tmdb_api/model/movier_recommedetion.dart';
 import 'package:netflix_tmdb_api/model/poppular_tv_series.dart';
+import 'package:netflix_tmdb_api/model/search_movie_model.dart';
 import 'package:netflix_tmdb_api/model/top_rated_movies.dart';
 import 'package:netflix_tmdb_api/model/trending_model.dart';
 import 'package:netflix_tmdb_api/model/upcoming_movie.dart';
@@ -116,6 +117,30 @@ class ApiServices {
       final response = await http.get(Uri.parse(apiUrl));
       if (response.statusCode == 200) {
         return movieRecommedationsFromJson(response.body);
+      } else {
+        throw Exception("Failed to load movies");
+      }
+    } catch (e) {
+      print("Error fetching movies: $e");
+      return null;
+    }
+  }
+
+  Future<SearchMovie?> searchMovie(String query) async {
+    try {
+      final endPoint =
+          "search/movie?query=${Uri.encodeQueryComponent(query)}";
+
+      final apiUrl = "$baseUrl$endPoint";
+      final response = await http.get(
+        Uri.parse(apiUrl),
+        headers: {
+          "Authorization":
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MTVmMTM2OGU0Mjk0YzgwMzc4MjY5NDAxZmMzZDk5YSIsIm5iZiI6MTczODAzNTg3Ny40Mywic3ViIjoiNjc5ODUyYTU5YTMwYTg1YjI3MjQyYjYxIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.Ys9Uuyf-WnCR-_FQHltu1OOi3lHECeBi06Fa-B5V2gg",
+        },
+      );
+      if (response.statusCode == 200) {
+        return searchMovieFromJson(response.body);
       } else {
         throw Exception("Failed to load movies");
       }

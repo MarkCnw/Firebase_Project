@@ -7,6 +7,7 @@ import 'package:netflix_tmdb_api/model/top_rated_movies.dart';
 import 'package:netflix_tmdb_api/model/trending_model.dart';
 import 'package:netflix_tmdb_api/model/upcoming_movie.dart';
 import 'package:netflix_tmdb_api/screen/movie_detail_screen.dart';
+import 'package:netflix_tmdb_api/screen/search_screen.dart';
 import 'package:netflix_tmdb_api/service/api_service.dart';
 
 class NetflixHomeScreen extends StatefulWidget {
@@ -49,7 +50,14 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
                   Image.asset("assets/Netflix-Brand-Logo.png", height: 50),
                   Spacer(),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SearchScreen(),
+                        ),
+                      );
+                    },
                     icon: Icon(
                       Icons.search,
                       size: 27,

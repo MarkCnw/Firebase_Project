@@ -110,18 +110,23 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              movie.title,
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                            Expanded(
+                              flex: 7,
+                              child: Text(
+                                movie.title,maxLines: 2,overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                            Spacer(),
-                            Image.asset(
-                              "assets/Netflix-Brand-Logo.png",
-                              height: 35,
+                            Expanded(
+                              flex: 1,
+                              child: Image.asset(
+                                "assets/Netflix-Brand-Logo.png",
+                                height: 35,
+                              ),
                             ),
                           ],
                         ),
