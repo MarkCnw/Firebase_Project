@@ -7,6 +7,8 @@ import 'package:netflix_tmdb_api/model/movie_model.dart';
 import 'package:netflix_tmdb_api/model/movier_recommedetion.dart';
 import 'package:netflix_tmdb_api/model/poppular_tv_series.dart';
 import 'package:netflix_tmdb_api/model/search_movie_model.dart';
+import 'package:netflix_tmdb_api/model/tmdb_trending.dart';
+
 import 'package:netflix_tmdb_api/model/top_rated_movies.dart';
 import 'package:netflix_tmdb_api/model/trending_model.dart';
 import 'package:netflix_tmdb_api/model/upcoming_movie.dart';
@@ -141,6 +143,22 @@ class ApiServices {
       );
       if (response.statusCode == 200) {
         return searchMovieFromJson(response.body);
+      } else {
+        throw Exception("Failed to load movies");
+      }
+    } catch (e) {
+      print("Error fetching movies: $e");
+      return null;
+    }
+  }
+
+  Future<TmdbTrending?> tmdbTrending() async {
+    try {
+      final endPoint = "trending/all/day";
+      final apiUrl = "$baseUrl$endPoint$key";
+      final response = await http.get(Uri.parse(apiUrl));
+      if (response.statusCode == 200) {
+        return tmdbTrendingFromJson(response.body);
       } else {
         throw Exception("Failed to load movies");
       }
