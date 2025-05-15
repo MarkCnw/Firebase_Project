@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:netflix_tmdb_api/screen/app_navbar_screen.dart';
-import 'package:netflix_tmdb_api/screen/splash_scree.dart';
+import 'package:flutter_food_delevery_provider/onboard_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,9 +11,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const AppNavbarScreen(),
       debugShowCheckedModeBanner: false,
-      title: 'Netflix TMDB API',
+      home: AppOnboardPage(),
     );
   }
 }

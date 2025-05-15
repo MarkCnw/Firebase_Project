@@ -25,6 +25,8 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
   late Future<TopRatedMovies?> topRatedMovieData;
   late Future<TrendingMovies?> trendingMovieData;
   late Future<PoppularTVseries?> poppularTVseriesData;
+
+  
   @override
   void initState() {
     movieData = apiServices.fetchMovies();
