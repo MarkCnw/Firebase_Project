@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:netflix_tmdb_api/screen/app_navbar_screen.dart';
 import 'package:netflix_tmdb_api/screen/splash_scree.dart';
 
 void main() {
@@ -12,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const AppNavbarScreen(),
+      home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
       title: 'Netflix TMDB API',
     );
