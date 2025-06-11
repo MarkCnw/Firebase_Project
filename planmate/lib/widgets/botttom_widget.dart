@@ -1,28 +1,37 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:planmate/theme/app_theme.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color? backgroundColor;
-  final double? iconSize;
+  final double? swordSize;
+  final double? widthButton;
+  final double? heightButton;
 
   const CustomButton({
     super.key,
     required this.onPressed,
     this.backgroundColor,
-    this.iconSize,
+    required this.swordSize,
+    required this.widthButton,
+    required this.heightButton,
   });
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.large(
+    return RawMaterialButton(
       onPressed: onPressed,
-      backgroundColor: backgroundColor ?? AppColors.backgroundOnboarding,
-      child: Icon(
-        Icons.sync_alt,
-        color: Colors.white,
-        size: iconSize ?? 32,
+      fillColor: backgroundColor ?? AppColors.backgroundOnboarding,
+      shape: const CircleBorder(),
+      constraints: BoxConstraints.tightFor(
+        width: widthButton ?? 56,
+        height: heightButton ?? 56,
+      ),
+      child: SvgPicture.asset(
+        'assets/1.svg',
+        width: swordSize ?? 20,
+        height: swordSize ?? 20,
       ),
     );
   }

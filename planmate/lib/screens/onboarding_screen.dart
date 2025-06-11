@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:planmate/theme/app_theme.dart'
+import 'package:planmate/theme/app_theme.dart';
 
+import 'package:planmate/widgets/botttom_widget.dart';
 
-import 'package:planmate/widgets/botttom_widget.dart';class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
 
   @override
@@ -61,7 +62,7 @@ import 'package:planmate/widgets/botttom_widget.dart';class OnboardingScreen ext
                         ),
                       ),
                       Spacer(),
-                      
+                      CustomButton(onPressed: (){}, swordSize: 80, widthButton: 100, heightButton: 100)
                     ],
                   ),
                 ),
