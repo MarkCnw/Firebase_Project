@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:planmate/screens/onboarding_screen.dart';
+import 'package:planmate/Onboarding/Presentation/onboarding_screen.dart';
 
 void main() {
   runApp(const MyApp());

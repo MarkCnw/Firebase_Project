@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:planmate/Auth/presentation/login_screen.dart';
 import 'package:planmate/theme/app_theme.dart';
 
 import 'package:planmate/widgets/botttom_widget.dart';
@@ -62,7 +63,20 @@ class OnboardingScreen extends StatelessWidget {
                         ),
                       ),
                       Spacer(),
-                      CustomButton(onPressed: (){}, swordSize: 80, widthButton: 100, heightButton: 100)
+                      CustomButton(
+                        onPressed: () {
+                          print("👉 ปุ่มถูกกด");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(),
+                            ),
+                          );
+                        },
+                        swordSize: 80,
+                        widthButton: 100,
+                        heightButton: 100,
+                      ),
                     ],
                   ),
                 ),

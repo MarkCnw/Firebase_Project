@@ -29,7 +29,7 @@ class CustomButton extends StatelessWidget {
         height: heightButton ?? 56,
       ),
       child: SvgPicture.asset(
-        'assets/1.svg',
+        'assets/button_onboarding.svg',
         width: swordSize ?? 20,
         height: swordSize ?? 20,
       ),
