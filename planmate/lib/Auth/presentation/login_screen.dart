@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:planmate/Onboarding/Presentation/onboarding_screen.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -9,43 +8,31 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => OnboardingScreen(),
-                    ),
-                  );
-                },
-                icon: SvgPicture.asset(
-                  'assets/icons/arrow_long_left.svg',
-                  width: 28,
-                  height: 28,
-                  color: Colors.black,
-                ),
-              ),
-              SizedBox(height: 24),
+              SizedBox(height: 16),
               Text(
-                "Let's Sign You In",
-                style: TextStyle(
-                  fontSize: 30,
+                "Let's Sign You in",
+                textAlign: TextAlign.center,
+                style: GoogleFonts.chakraPetch(
+                  fontSize: 37,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 8),
               Text(
                 "Welcome back\nYou've been missed!",
-                style: TextStyle(fontSize: 20, color: Colors.grey[600]),
+                style: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 20),
               ),
-              SizedBox(height: 40),
-
+              Center(child: SvgPicture.asset('assets/login.svg')),
+              SizedBox(height: 15),
               Text(
                 "Username or Email",
                 style: TextStyle(
@@ -91,7 +78,6 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16),
-
               Text(
                 "Password",
                 style: TextStyle(
@@ -99,10 +85,10 @@ class LoginScreen extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
               ),
+              SizedBox(height: 8),
               TextFormField(
-                obscureText: true,
                 decoration: InputDecoration(
-                  hintText: "Enter Password",
+                  hintText: "Enter Username or Email",
                   hintStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -144,135 +130,92 @@ class LoginScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Text("or"),
+                    child: Text("Or"),
                   ),
                   Expanded(
                     child: Divider(color: Colors.grey[300], thickness: 1),
                   ),
                 ],
               ),
-              SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey[500]!,
+              SizedBox(height: 15),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: () {},
+                    icon: Image.asset(
+                      'assets/icons/google.png',
+                      height: 24,
+                    ),
+                    label: Text(
+                      "Sign in with Google",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(
+                        color: Colors.grey.shade400,
                         width: 1,
                       ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Center(
-                      child: Image.network(
-                        'https://developers.google.com/identity/images/g-logo.png',
-                        width: 28,
-                        height: 28,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
                       ),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                   ),
-                  SizedBox(width: 16),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey[500]!,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Center(
-                      child: FaIcon(
-                        FontAwesomeIcons.linkedinIn,
-                        size: 28,
-                        color: Color(0xFF0077B7),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey[500]!,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Center(
-                      child: FaIcon(
-                        FontAwesomeIcons.facebookF,
-                        size: 28,
-                        color: Color(0xFF1877F2),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-              SizedBox(height: 120),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Don't have an account?",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/register');
-                    },
-                    child: Text(
-                      " Register",
+              SizedBox(height: 50),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account?",
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.normal,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OnboardingScreen(),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Text(
+                        "Register",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                         ),
-                      );
-                    },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 8),
+              Center(
+                child: SizedBox(
+                  width: 330,
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
                       elevation: 0,
-                      minimumSize: Size(330, 60),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18),
                       ),
                     ),
-
                     child: Text(
-                      "Login",
+                      "Log in",
                       style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
             ],
           ),

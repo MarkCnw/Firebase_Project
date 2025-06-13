@@ -13,7 +13,6 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundOnboarding,
-
       body: SafeArea(
         child: Column(
           children: [
