@@ -16,20 +16,20 @@ class OnboardingScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // ส่วนบน - Character และ floating elements
+            
             Expanded(
-              flex: 3, // ให้พื้นที่มากกว่า
+              flex: 3, 
               child: Stack(
                 children: [
-                  // Character อยู่กลางส่วนบน
+                  
                   Center(child: SvgPicture.asset('assets/onboarding.svg')),
                 ],
               ),
             ),
 
-            // ส่วนล่าง - Card ขาว
+            
             Expanded(
-              flex: 2, // พื้นที่น้อยกว่า
+              flex: 2, 
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -57,14 +57,13 @@ class OnboardingScreen extends StatelessWidget {
                         'Organized all your task in list and\nproject to help you build new habits',
                         style: GoogleFonts.inter(
                           fontSize: 18,
-                          fontWeight: FontWeight.w400, // Regular
+                          fontWeight: FontWeight.w400, 
                           color: Colors.grey[600],
                         ),
                       ),
                       Spacer(),
                       CustomButton(
                         onPressed: () {
-                          print("👉 ปุ่มถูกกด");
                           Navigator.push(
                             context,
                             MaterialPageRoute(

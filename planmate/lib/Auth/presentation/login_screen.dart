@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:planmate/Auth/presentation/register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -31,7 +32,7 @@ class LoginScreen extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontSize: 20),
               ),
-              Center(child: SvgPicture.asset('assets/login.svg')),
+              Center(child: SvgPicture.asset('assets/login.svg',width: 230,height: 230,)),
               SizedBox(height: 15),
               Text(
                 "Username or Email",
@@ -150,7 +151,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     label: Text(
                       "Sign in with Google",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.black,fontSize: 15),
                     ),
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(
@@ -165,7 +166,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 30),
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -178,8 +179,14 @@ class LoginScreen extends StatelessWidget {
                         fontWeight: FontWeight.normal,
                       ),
                     ),
+                    SizedBox(width: 4),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUpScreen()),
+                      );
+                      },
                       child: Text(
                         "Register",
                         style: TextStyle(
@@ -198,7 +205,13 @@ class LoginScreen extends StatelessWidget {
                   width: 330,
                   height: 60,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+
+                       Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUpScreen()),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
@@ -208,11 +221,11 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      "Log in",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      "Sign In",
+                      style: GoogleFonts.chakraPetch(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
                     ),
                   ),
                 ),
