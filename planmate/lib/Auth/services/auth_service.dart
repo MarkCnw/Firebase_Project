@@ -35,6 +35,7 @@ class AuthService {
     }
   }
 
+  /// Login ด้วย email / password
   Future<String> signInWithEmail({
     required String email,
     required String password,
@@ -50,12 +51,13 @@ class AuthService {
     }
   }
 
+  /// Login ด้วย Google
   Future<String> signInWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
       if (googleUser == null) return 'cancelled';
 
-      final GoogleAuth = await googleUser.authentication;
+      final googleAuth = await googleUser.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
@@ -64,11 +66,10 @@ class AuthService {
 
       final userCred = await _auth.signInWithCredential(credential);
 
-      final userDoc =
-          await _firestore
-              .collection('users')
-              .doc(userCred.user!.uid)
-              .get();
+      final userDoc = await _firestore
+          .collection('users')
+          .doc(userCred.user!.uid)
+          .get();
 
       if (!userDoc.exists) {
         await _firestore.collection('users').doc(userCred.user!.uid).set({
@@ -79,9 +80,39 @@ class AuthService {
           'createdAt': DateTime.now(),
         });
       }
+
       return 'success';
     } catch (e) {
       return _handleAuthError(e);
     }
+  }
+
+  /// Logout ทั้ง email และ google
+  Future<void> signOut() async {
+    await Future.wait([
+      _auth.signOut(),
+      _googleSignIn.signOut(),
+    ]);
+  }
+
+  /// จัดการ error → คืนข้อความที่เหมาะใช้แสดงใน UI
+  String _handleAuthError(dynamic e) {
+    if (e is FirebaseAuthException) {
+      switch (e.code) {
+        case 'user-not-found':
+          return 'No user found with this email.';
+        case 'wrong-password':
+          return 'Incorrect password.';
+        case 'email-already-in-use':
+          return 'Email is already registered.';
+        case 'weak-password':
+          return 'Password is too weak.';
+        case 'invalid-email':
+          return 'Invalid email format.';
+        default:
+          return e.message ?? 'Authentication error.';
+      }
+    }
+    return 'An unknown error occurred.';
   }
 }
