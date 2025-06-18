@@ -31,20 +31,16 @@ class AuthWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(), // เปลี่ยนจาก AuthService()
+      stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        // แสดง loading ขณะรอการเชื่อมต่อ
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
-            backgroundColor: Colors.white,
-            body: Center(
-              child: CircularProgressIndicator(color: Colors.black),
-            ),
-          );
-        }
+        // Debug logs
+        print('AuthWrapper - Connection state: ${snapshot.connectionState}');
+        print('AuthWrapper - Has data: ${snapshot.hasData}');
+        print('AuthWrapper - User: ${snapshot.data?.uid}');
         
         // ถ้า error
         if (snapshot.hasError) {
+          print('AuthWrapper - Error: ${snapshot.error}');
           return Scaffold(
             backgroundColor: Colors.white,
             body: Center(
@@ -53,14 +49,25 @@ class AuthWrapper extends StatelessWidget {
           );
         }
         
-        // ถ้ามี user (login แล้ว) -> ไปหน้า home
+        // ✅ เช็คการมี user ก่อน - ไม่ว่า connection state จะเป็นอะไร
         if (snapshot.hasData && snapshot.data != null) {
-          print('User logged in: ${snapshot.data!.uid}'); // debug
+          print('AuthWrapper - User logged in, showing HomePage: ${snapshot.data!.uid}');
           return HomePage();
         }
         
-        // ถ้าไม่มี user (ยังไม่ login) -> ไปหน้า onboarding
-        print('No user found, showing onboarding'); // debug
+        // ถ้า connection กำลัง waiting และยังไม่มี data เลย
+        if (snapshot.connectionState == ConnectionState.waiting && !snapshot.hasData) {
+          print('AuthWrapper - Showing loading');
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+              child: CircularProgressIndicator(color: Colors.black),
+            ),
+          );
+        }
+        
+        // ถ้าไม่มี user (ยังไม่ login)
+        print('AuthWrapper - No user found, showing onboarding');
         return const OnboardingScreen();
       },
     );

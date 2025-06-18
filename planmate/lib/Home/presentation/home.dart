@@ -6,12 +6,15 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('HomePage - Building HomePage');
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('PlanMate'),
         actions: [
           IconButton(
             onPressed: () async {
+              print('HomePage - Sign out pressed');
               await AuthService().signOut();
               // AuthWrapper จะ handle การ redirect กลับไป login อัตโนมัติ
             },
