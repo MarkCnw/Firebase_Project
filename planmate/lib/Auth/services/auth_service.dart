@@ -10,6 +10,9 @@ class AuthService {
   /// ฟัง auth state เปลี่ยน เช่น login/logout
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
+  /// Get current user
+  User? get currentUser => _auth.currentUser;
+
   /// สมัครสมาชิกด้วย email + password + name
   Future<String> registerWithEmail({
     required String email,
@@ -17,10 +20,14 @@ class AuthService {
     required String name,
   }) async {
     try {
+      print('Starting registration for: $email'); // debug
+      
       final cred = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      print('User created: ${cred.user?.uid}'); // debug
 
       await _firestore.collection('users').doc(cred.user!.uid).set({
         'uid': cred.user!.uid,
@@ -29,8 +36,10 @@ class AuthService {
         'createdAt': DateTime.now(),
       });
 
+      print('User data saved to Firestore'); // debug
       return 'success';
     } catch (e) {
+      print('Registration error: $e'); // debug
       return _handleAuthError(e);
     }
   }
@@ -41,12 +50,17 @@ class AuthService {
     required String password,
   }) async {
     try {
-      await _auth.signInWithEmailAndPassword(
+      print('Starting login for: $email'); // debug
+      
+      final result = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      
+      print('Login successful: ${result.user?.uid}'); // debug
       return 'success';
     } catch (e) {
+      print('Login error: $e'); // debug
       return _handleAuthError(e);
     }
   }
@@ -54,8 +68,13 @@ class AuthService {
   /// Login ด้วย Google
   Future<String> signInWithGoogle() async {
     try {
+      print('Starting Google sign in'); // debug
+      
       final googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) return 'cancelled';
+      if (googleUser == null) {
+        print('Google sign in cancelled'); // debug
+        return 'cancelled';
+      }
 
       final googleAuth = await googleUser.authentication;
 
@@ -65,6 +84,7 @@ class AuthService {
       );
 
       final userCred = await _auth.signInWithCredential(credential);
+      print('Google sign in successful: ${userCred.user?.uid}'); // debug
 
       final userDoc = await _firestore
           .collection('users')
@@ -79,20 +99,28 @@ class AuthService {
           'photoUrl': userCred.user?.photoURL ?? '',
           'createdAt': DateTime.now(),
         });
+        print('New Google user data saved'); // debug
       }
 
       return 'success';
     } catch (e) {
+      print('Google sign in error: $e'); // debug
       return _handleAuthError(e);
     }
   }
 
   /// Logout ทั้ง email และ google
   Future<void> signOut() async {
-    await Future.wait([
-      _auth.signOut(),
-      _googleSignIn.signOut(),
-    ]);
+    try {
+      print('Starting sign out'); // debug
+      await Future.wait([
+        _auth.signOut(),
+        _googleSignIn.signOut(),
+      ]);
+      print('Sign out successful'); // debug
+    } catch (e) {
+      print('Sign out error: $e'); // debug
+    }
   }
 
   /// จัดการ error → คืนข้อความที่เหมาะใช้แสดงใน UI
@@ -109,6 +137,10 @@ class AuthService {
           return 'Password is too weak.';
         case 'invalid-email':
           return 'Invalid email format.';
+        case 'invalid-credential':
+          return 'Invalid email or password.';
+        case 'too-many-requests':
+          return 'Too many failed attempts. Please try again later.';
         default:
           return e.message ?? 'Authentication error.';
       }

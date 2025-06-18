@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:planmate/Auth/services/auth_service.dart';
 import 'package:planmate/Home/presentation/home.dart';
 import 'package:planmate/Onboarding/Presentation/onboarding_screen.dart';
 import 'package:planmate/firebase_options.dart';
@@ -32,8 +31,9 @@ class AuthWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
-      stream: AuthService().authStateChanges,
+      stream: FirebaseAuth.instance.authStateChanges(), // เปลี่ยนจาก AuthService()
       builder: (context, snapshot) {
+        // แสดง loading ขณะรอการเชื่อมต่อ
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
             backgroundColor: Colors.white,
@@ -42,9 +42,25 @@ class AuthWrapper extends StatelessWidget {
             ),
           );
         }
-        if (snapshot.hasData) {
+        
+        // ถ้า error
+        if (snapshot.hasError) {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+              child: Text('Something went wrong: ${snapshot.error}'),
+            ),
+          );
+        }
+        
+        // ถ้ามี user (login แล้ว) -> ไปหน้า home
+        if (snapshot.hasData && snapshot.data != null) {
+          print('User logged in: ${snapshot.data!.uid}'); // debug
           return HomePage();
         }
+        
+        // ถ้าไม่มี user (ยังไม่ login) -> ไปหน้า onboarding
+        print('No user found, showing onboarding'); // debug
         return const OnboardingScreen();
       },
     );
