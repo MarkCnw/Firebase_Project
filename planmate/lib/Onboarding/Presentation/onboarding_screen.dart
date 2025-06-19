@@ -16,20 +16,17 @@ class OnboardingScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            
             Expanded(
-              flex: 3, 
+              flex: 3,
               child: Stack(
                 children: [
-                  
                   Center(child: SvgPicture.asset('assets/onboarding.svg')),
                 ],
               ),
             ),
 
-            
             Expanded(
-              flex: 2, 
+              flex: 2,
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -57,7 +54,7 @@ class OnboardingScreen extends StatelessWidget {
                         'Organized all your task in list and\nproject to help you build new habits',
                         style: GoogleFonts.inter(
                           fontSize: 18,
-                          fontWeight: FontWeight.w400, 
+                          fontWeight: FontWeight.w400,
                           color: Colors.grey[600],
                         ),
                       ),

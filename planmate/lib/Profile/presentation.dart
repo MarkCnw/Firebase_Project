@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:planmate/Auth/presentation/login_screen.dart';
+import 'package:planmate/widgets/botttom_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -9,7 +10,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
-      backgroundColor: Color(0xFFF6874E),
+      // backgroundColor: Color(0xFFF6874E),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -20,22 +21,99 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   Center(
                     child: Text(
-                      "Let's Sign You in",
+                      "Who is You?",
                       style: GoogleFonts.chakraPetch(
                         fontSize: 37,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  SizedBox(height: 20,),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  SizedBox(height: 20),
+                  Wrap(
+                    spacing: 20,
+                    alignment: WrapAlignment.center,
                     children: [
-                      SvgPicture.asset('assets/avatar/avatar1.svg',height: 100,width: 100,),
-                      SvgPicture.asset('assets/avatar/avatar2.svg',height: 100,width: 100,),
-                      SvgPicture.asset('assets/avatar/avatar3.svg',height: 100,width: 100,)
+                      Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(),
+                            child: Image.asset(
+                              'assets/avatar/avatar1.png',
+                              width: 120,
+                              height: 120,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            "Ironman",
+                            style: GoogleFonts.chakraPetch(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(),
+                            child: Image.asset(
+                              'assets/avatar/avatar3.png',
+                              width: 120,
+                              height: 120,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            "Batman",
+                            style: GoogleFonts.chakraPetch(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(),
+                            child: Image.asset(
+                              'assets/avatar/avatar2.png',
+                              width: 120,
+                              height: 120,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            "Spiderman",
+                            style: GoogleFonts.chakraPetch(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
-                  )
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  CustomButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SignInScreen(),
+                            ),
+                          );
+                        },
+                        swordSize: 80,
+                        widthButton: 100,
+                        heightButton: 100,
+                      ),
                 ],
               ),
             ),
