@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:planmate/Onboarding/Presentation/onboarding_screen.dart';
-import 'package:planmate/Profile/Presentation.dart';
+import 'package:planmate/Selection%20Profile/presentation/selection_profile.dart';
+
 import 'firebase_options.dart';
 
 
