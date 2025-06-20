@@ -24,7 +24,7 @@ class AvatarItem extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               border: isSelected 
-                ? Border.all(color: Colors.white, width: 3)
+                ? Border.all(color: Colors.white, width: 4)
                 : null,
               borderRadius: BorderRadius.circular(12),
             ),
@@ -36,12 +36,28 @@ class AvatarItem extends StatelessWidget {
             ),
           ),
           SizedBox(height: 8),
-          Text(
-            name,
-            style: GoogleFonts.chakraPetch(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: isSelected ? Colors.white : Colors.black,
+          // ใส่พื้นหลังให้กับข้อความเพื่อให้ชัดเจน
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              // เพิ่มเงาเล็กน้อยเพื่อให้ดูโดดเด่น
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 4,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Text(
+              name,
+              style: GoogleFonts.chakraPetch(
+                fontSize: 16,
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                color: isSelected ? Color(0xFFF6874E) : Colors.black87,
+              ),
             ),
           ),
         ],

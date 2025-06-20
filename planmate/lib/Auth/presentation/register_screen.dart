@@ -4,7 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:planmate/Auth/presentation/login_screen.dart';
 import 'package:planmate/Auth/services/auth_service.dart';
 import 'package:planmate/Auth/services/google_service.dart';
-import 'package:planmate/Home/presentation/home.dart';
+
+import 'package:planmate/Selection%20Profile/presentation/selection_profile.dart';
 import 'package:planmate/Widgets/snackbar.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -46,7 +47,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       if (res == "success") {
         if (mounted) {
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            MaterialPageRoute(builder: (context) => const ProfileScreen()),
           );
         }
       } else {
@@ -73,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       await FirebaseServices().signInWithGoogle();
       if (mounted) {
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(builder: (context) => const ProfileScreen()),
         );
       }
     } catch (e) {
@@ -99,7 +100,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 16),
                 Text(
                   "Create Account",
                   textAlign: TextAlign.center,
@@ -322,51 +322,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        color: Colors.grey[300],
-                        thickness: 1,
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Text("Or"),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        color: Colors.grey[300],
-                        thickness: 1,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 15),
-                Center(
-                  child: GestureDetector(
-                    onTap: isLoading ? null : signInWithGoogle,
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.grey[500]!,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Center(
-                        child: Image.asset(
-                          'assets/icons/google.png',
-                          scale: 3,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

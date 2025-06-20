@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:planmate/Auth/presentation/register_screen.dart';
 import 'package:planmate/Auth/services/auth_service.dart';
 import 'package:planmate/Auth/services/google_service.dart';
-import 'package:planmate/Home/presentation/home.dart';
+import 'package:planmate/Selection%20Profile/presentation/selection_profile.dart';
 import 'package:planmate/Widgets/snackbar.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -43,7 +43,7 @@ class _SignInScreenState extends State<SignInScreen> {
       if (res == "success") {
         if (mounted) {
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
+            MaterialPageRoute(builder: (context) => const ProfileScreen()),
           );
         }
       } else {
@@ -70,7 +70,7 @@ class _SignInScreenState extends State<SignInScreen> {
       await FirebaseServices().signInWithGoogle();
       if (mounted) {
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(builder: (context) => const ProfileScreen()),
         );
       }
     } catch (e) {
