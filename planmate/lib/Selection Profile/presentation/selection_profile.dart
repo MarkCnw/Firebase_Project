@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:planmate/Home/presentation/home.dart';
 import 'package:planmate/Selection%20Profile/Widgets/avatar_widget.dart';
 
 class ProfileScreen extends StatefulWidget {  // เปลี่ยนเป็น StatefulWidget
@@ -71,9 +72,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(height: 60),
                   ElevatedButton(
                     onPressed: selectedAvatar != null ? () {
-                      // ทำอะไรสักอย่างเมื่อกด Confirm
-                      print("Selected: $selectedAvatar");
-                      // Navigator.push(...) หรือ action อื่นๆ
+                      Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(),
+                            ),
+                          );
                     } : null,  // ปิดปุ่มถ้ายังไม่เลือก avatar
                     style: ElevatedButton.styleFrom(
                       backgroundColor: selectedAvatar != null ? Colors.black : Colors.grey,
