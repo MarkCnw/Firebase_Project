@@ -2,18 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:planmate/Auth/presentation/login_screen.dart';
 import 'package:planmate/Auth/services/google_service.dart';
-import 'package:planmate/Widgets/bunton.dart';
+import 'package:planmate/Selection%20Profile/Models/avatar_data.dart';
 
-// Import AvatarData model
-class AvatarData {
-  final String name;
-  final String imagePath;
-  
-  const AvatarData({
-    required this.name,
-    required this.imagePath,
-  });
-}
+import 'package:planmate/Widgets/bunton.dart';
+// เพิ่ม import
 
 class HomeScreen extends StatelessWidget {
   final AvatarData? selectedAvatar;

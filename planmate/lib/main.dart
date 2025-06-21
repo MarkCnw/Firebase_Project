@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:planmate/Auth/presentation/login_screen.dart';
-import 'package:planmate/Onboarding/Presentation/onboarding_screen.dart';
+
+import 'package:planmate/Selection%20Profile/presentation/selection_profile.dart';
 
 import 'firebase_options.dart';
 
@@ -28,9 +28,9 @@ class MyApp extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
          builder: (context,snapshot){
           if (snapshot.hasData) {
-            return OnboardingScreen();  
+            return ProfileScreen();  
           }else{
-            return SignInScreen();
+            return ProfileScreen();
           }
          }
       ) ,
