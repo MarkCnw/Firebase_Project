@@ -1,4 +1,5 @@
 import 'package:crud/createbutton.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class RealTimeCrudeDatabase extends StatefulWidget {
@@ -8,6 +9,8 @@ class RealTimeCrudeDatabase extends StatefulWidget {
   State<RealTimeCrudeDatabase> createState() =>
       _RealTimeCrudeDatabaseState();
 }
+
+final DatabaseReference = FirebaseDatabase.instance.ref();
 
 class _RealTimeCrudeDatabaseState extends State<RealTimeCrudeDatabase> {
   @override
