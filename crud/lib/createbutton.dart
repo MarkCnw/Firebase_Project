@@ -1,3 +1,4 @@
+import 'package:crud/realtimedata.dart';
 import 'package:flutter/material.dart';
 
 final TextEditingController nameController = TextEditingController();
@@ -5,18 +6,19 @@ final TextEditingController snController = TextEditingController();
 final TextEditingController addressController = TextEditingController();
 void createButtomSheet(BuildContext context) {
   showModalBottomSheet(
+    isScrollControlled: true,
     backgroundColor: Colors.blue[100],
     context: context,
     builder: (BuildContext context) {
       return Padding(
-        padding:  EdgeInsets.only(
+        padding: EdgeInsets.only(
           top: 20,
           right: 20,
           left: 20,
           bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-
         ),
-        child: Column(
+        child: SingleChildScrollView(
+          child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -50,11 +52,23 @@ void createButtomSheet(BuildContext context) {
                 hintText: "Eg Us",
               ),
             ),
-            SizedBox(height: 20,),
-            
-            ElevatedButton(onPressed: () {}, child: Text("Add")),
+            SizedBox(height: 20),
+
+            ElevatedButton(
+              onPressed: () {
+                final id = DateTime.now().microsecond.toString();
+                databaseReference.child((id).toString()).set({
+                  'name': nameController.text.toString(),
+                  'sn': snController.text.toString(),
+                  'address': addressController.text.toString(),
+                  'id':id
+                });
+              },
+              child: Text("Add"),
+            ),
           ],
         ),
+        )
       );
     },
   );

@@ -10,12 +10,12 @@ class RealTimeCrudeDatabase extends StatefulWidget {
       _RealTimeCrudeDatabaseState();
 }
 
-final DatabaseReference = FirebaseDatabase.instance.ref();
-
+final databaseReference = FirebaseDatabase.instance.ref();
 class _RealTimeCrudeDatabaseState extends State<RealTimeCrudeDatabase> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.blue[100],
       appBar: AppBar(
         backgroundColor: Colors.blue,
