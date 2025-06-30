@@ -1,12 +1,14 @@
 import 'package:crud/realtimedata.dart';
 import 'package:flutter/material.dart';
 
-final ImageEditingController imageController = ImageEditingController();
 final TextEditingController nameController = TextEditingController();
 final TextEditingController snController = TextEditingController();
 final TextEditingController addressController = TextEditingController();
 
-void createButtomSheet(BuildContext context) {
+void updateButtomSheet(BuildContext context, name, id, sn, address) {
+  nameController.text = name;
+  snController.text = sn;
+  addressController.text = address;
   showModalBottomSheet(
     isScrollControlled: true,
     backgroundColor: Colors.blue[100],
@@ -59,26 +61,15 @@ void createButtomSheet(BuildContext context) {
 
               ElevatedButton(
                 onPressed: () {
-                  final id = DateTime.now().microsecond.toString();
-                  databaseReference
-                      .child(id)
-                      .set({
-                        'name': nameController.text,
-                        'sn': snController.text,
-                        'address': addressController.text,
-                        'id': id,
-                      })
-                      .then((_) {
-                        // ล้างฟอร์ม
-                        nameController.clear();
-                        snController.clear();
-                        addressController.clear();
+                  databaseReference.child(id).update({
+                    'name': nameController.text,
+                    'sn': snController.text,
+                    'address': addressController.text,
+                  });
 
-                        // ปิด Bottom Sheet
-                        Navigator.pop(context);
-                      });
+                  Navigator.pop(context);
                 },
-                child: Text("Add"),
+                child: Text("Update"),
               ),
             ],
           ),
