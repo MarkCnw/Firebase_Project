@@ -1,10 +1,14 @@
-import 'package:crud/realtimedata.dart';
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-final ImageEditingController imageController = ImageEditingController();
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:crud/realtimedata.dart';
+
 final TextEditingController nameController = TextEditingController();
 final TextEditingController snController = TextEditingController();
 final TextEditingController addressController = TextEditingController();
+File? _imageFile;
 
 void createButtomSheet(BuildContext context) {
   showModalBottomSheet(
@@ -21,64 +25,95 @@ void createButtomSheet(BuildContext context) {
         ),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Center(
                 child: Text(
-                  "Create Your Items",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  "Create Your Item",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
+              SizedBox(height: 10),
+              GestureDetector(
+                onTap: () async {
+                  final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+                  if (pickedImage != null) {
+                    _imageFile = File(pickedImage.path);
+                  }
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 180,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.blue),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  alignment: Alignment.center,
+                  child: _imageFile != null
+                      ? Image.file(_imageFile!, fit: BoxFit.cover)
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.image, size: 40, color: Colors.grey),
+                            Text("แตะเพื่อเลือกรูปสินค้า"),
+                          ],
+                        ),
+                ),
+              ),
+              SizedBox(height: 10),
               TextField(
                 controller: nameController,
                 decoration: InputDecoration(
                   labelText: "name",
-                  hintText: "Eg Elon",
+                  border: OutlineInputBorder(),
                 ),
               ),
+              SizedBox(height: 10),
               TextField(
-                keyboardType: TextInputType.number,
                 controller: snController,
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: "Sn",
-                  hintText: "Eg 1",
+                  labelText: "Description",
+                  border: OutlineInputBorder(),
                 ),
               ),
+              SizedBox(height: 10),
               TextField(
                 controller: addressController,
                 decoration: InputDecoration(
-                  labelText: "address",
-                  hintText: "Eg Us",
+                  labelText: "Price",
+                  border: OutlineInputBorder(),
                 ),
               ),
               SizedBox(height: 20),
-
               ElevatedButton(
-                onPressed: () {
-                  final id = DateTime.now().microsecond.toString();
-                  databaseReference
-                      .child(id)
-                      .set({
-                        'name': nameController.text,
-                        'sn': snController.text,
-                        'address': addressController.text,
-                        'id': id,
-                      })
-                      .then((_) {
-                        // ล้างฟอร์ม
-                        nameController.clear();
-                        snController.clear();
-                        addressController.clear();
+                onPressed: () async {
+                  final id = DateTime.now().microsecondsSinceEpoch.toString();
+                  String? imageUrl;
 
-                        // ปิด Bottom Sheet
-                        Navigator.pop(context);
-                      });
+                  if (_imageFile != null) {
+                    final ref = FirebaseStorage.instance.ref().child('product_images/$id.jpg');
+                    await ref.putFile(_imageFile!);
+                    imageUrl = await ref.getDownloadURL();
+                  }
+
+                  await databaseReference.child(id).set({
+                    'id': id,
+                    'name': nameController.text,
+                    'Description': snController.text,
+                    'Price': addressController.text,
+                    'image': imageUrl ?? '',
+                  });
+
+                  nameController.clear();
+                  snController.clear();
+                  addressController.clear();
+                  _imageFile = null;
+
+                  Navigator.pop(context);
                 },
-                child: Text("Add"),
+                child: Text("เพิ่มสินค้า"),
               ),
             ],
           ),
