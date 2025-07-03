@@ -60,7 +60,7 @@ class ProductCard extends StatelessWidget {
             ),
           ),
 
-          // ✅ ตรงนี้ถูกย้ายไปอยู่ใน Stack
+          // แก้ไขการส่งข้อมูลให้ตรงกับโครงสร้างฐานข้อมูล
           Positioned(
             top: 120,
             right: 4,
@@ -74,13 +74,14 @@ class ProductCard extends StatelessWidget {
                     title: Text("Edit"),
                     onTap: () {
                       Navigator.pop(context);
+                      // ✅ แก้ไขการส่งข้อมูลให้ตรงกับโครงสร้างฐานข้อมูล
                       updateButtomSheet(
                         context: context,
                         image: item['image'],
-                        name: item['name'],
-                        id: item['id'],
-                        sn: item['sn'],
-                        address: item['Price'],
+                        name: item['name'] ?? '',
+                        id: item['id'] ?? '',
+                        description: item['Description'] ?? '', // เปลี่ยนจาก sn เป็น description
+                        price: item['Price'] ?? '',           // เปลี่ยนจาก address เป็น price
                       );
                     },
                   ),
