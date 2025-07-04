@@ -1,5 +1,5 @@
 import 'package:crud/firebase_options.dart';
-import 'package:crud/realtimedata.dart';
+import 'package:crud/screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: RealTimeCrudeDatabase(),
+      home: HomeScreen(),
     );
   }
 }
