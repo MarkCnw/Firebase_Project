@@ -25,5 +25,7 @@ class Product {
     price: map['price'],
   );
 
+  copyWith({required String imageUrl}) {}
+
   
 }
