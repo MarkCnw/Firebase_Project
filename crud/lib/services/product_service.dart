@@ -6,6 +6,4 @@ abstract class ProductService {
   Future<void> updateProduct(Product product, File? newImageFile);
   Future<void> deleteProduct(String id);
   Stream<List<Product>> getProducts();
-
-  
 }
