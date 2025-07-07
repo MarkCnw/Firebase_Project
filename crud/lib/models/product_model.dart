@@ -19,10 +19,10 @@ class Product {
   };
 
   factory Product.fromMap(Map<String, dynamic> map) => Product(
-    id: map['id'],
-    title: map['title'],
-    imageUrl: map['imageUrl'],
-    price: map['price'],
+    id: map['id'] ?? '',
+    title: map['title'] ?? '',
+    imageUrl: map['imageUrl'] ?? '',
+    price: (map['price'] ?? 0).toDouble(),
   );
 
   copyWith({required String imageUrl}) {}

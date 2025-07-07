@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 
-
 import '../widgets/createbuttton_widget.dart';
 
 
@@ -24,11 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
      
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => const CreatebutttonWidget(),
-    );
+          CreatebutttonWidget();
         },
         child: const Icon(Icons.add),
       ),
