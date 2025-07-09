@@ -25,7 +25,38 @@ class Product {
     price: (map['price'] ?? 0).toDouble(),
   );
 
-  copyWith({required String imageUrl}) {}
+  // Fixed copyWith method
+  Product copyWith({
+    String? id,
+    String? title,
+    String? imageUrl,
+    double? price,
+  }) {
+    return Product(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      imageUrl: imageUrl ?? this.imageUrl,
+      price: price ?? this.price,
+    );
+  }
 
-  
+  @override
+  String toString() {
+    return 'Product(id: $id, title: $title, imageUrl: $imageUrl, price: $price)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is Product &&
+        other.id == id &&
+        other.title == title &&
+        other.imageUrl == imageUrl &&
+        other.price == price;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^ title.hashCode ^ imageUrl.hashCode ^ price.hashCode;
+  }
 }
