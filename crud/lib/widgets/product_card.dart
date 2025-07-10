@@ -23,6 +23,7 @@ class ProductCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Product Image
             Container(
               width: 80,
               height: 80,
@@ -39,9 +40,7 @@ class ProductCard extends StatelessWidget {
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
                           return const Center(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                            ),
+                            child: CircularProgressIndicator(strokeWidth: 2),
                           );
                         },
                         errorBuilder: (context, error, stackTrace) {
@@ -60,7 +59,7 @@ class ProductCard extends StatelessWidget {
                     ),
             ),
             const SizedBox(width: 12),
-
+            
             // Product Details
             Expanded(
               child: Column(
@@ -68,22 +67,21 @@ class ProductCard extends StatelessWidget {
                 children: [
                   Text(
                     product.title,
-                    style: Theme.of(context).textTheme.titleMedium
-                        ?.copyWith(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     '\$${product.price.toStringAsFixed(2)}',
-                    style: Theme.of(context).textTheme.titleSmall
-                        ?.copyWith(
-                          color: Colors.green[700],
-                          fontWeight: FontWeight.w600,
-                        ),
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color: Colors.green[700],
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 8),
                   Text(
                     'ID: ${product.id}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -93,20 +91,23 @@ class ProductCard extends StatelessWidget {
                 ],
               ),
             ),
+            
             // Action Buttons
             Column(
               children: [
                 IconButton(
                   onPressed: onEdit,
-                  icon: Icon(Icons.edit_square),
+                  icon: const Icon(Icons.edit),
                   color: Colors.blue,
                   tooltip: 'Edit Product',
+                  visualDensity: VisualDensity.compact,
                 ),
                 IconButton(
                   onPressed: onDelete,
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   color: Colors.red,
-                  tooltip: "Delete Product",
+                  tooltip: 'Delete Product',
+                  visualDensity: VisualDensity.compact,
                 ),
               ],
             ),

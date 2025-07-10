@@ -66,7 +66,11 @@ class CustomConfirmDialog extends StatelessWidget {
       title: Row(
         children: [
           if (icon != null) ...[
-            Icon(icon, color: confirmColor ?? Colors.red, size: 24),
+            Icon(
+              icon,
+              color: confirmColor ?? Colors.red,
+              size: 24,
+            ),
             const SizedBox(width: 8),
           ],
           Text(title),
@@ -76,7 +80,9 @@ class CustomConfirmDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.grey[600],
+          ),
           child: Text(cancelText),
         ),
         ElevatedButton(
@@ -91,3 +97,30 @@ class CustomConfirmDialog extends StatelessWidget {
     );
   }
 }
+
+// Usage examples:
+/*
+// Basic confirm dialog
+final result = await showDialog<bool>(
+  context: context,
+  builder: (context) => ConfirmDialog(
+    title: 'Delete Product',
+    content: 'Are you sure you want to delete this product?',
+    confirmText: 'Delete',
+    cancelText: 'Cancel',
+  ),
+);
+
+// Custom styled confirm dialog
+final result = await showDialog<bool>(
+  context: context,
+  builder: (context) => CustomConfirmDialog(
+    title: 'Delete Product',
+    content: 'This action cannot be undone.',
+    confirmText: 'Delete',
+    cancelText: 'Cancel',
+    confirmColor: Colors.red,
+    icon: Icons.warning,
+  ),
+);
+*/
