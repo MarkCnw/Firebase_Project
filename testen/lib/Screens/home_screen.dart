@@ -1,9 +1,10 @@
+import 'dart:ffi';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:testen/Services/firebase_product_service.dart';
 import 'package:testen/Widgets/confirm_dialog.dart';
 import 'package:testen/Widgets/createbuttton_widget.dart';
-import 'package:testen/Widgets/product_card.dart';
 import 'package:testen/models/product_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -62,34 +63,19 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error deleting product: $e')),
+          SnackBar(content: Text('Error to delete product $e')),
         );
       }
     }
   }
 
-  void _showCreateDialog() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) => CreatebutttonWidget(
-        onProductCreated: () {
-          Navigator.pop(context);
-          // Products will be updated automatically via stream
-        },
-      ),
-    );
-  }
-
   void _showEditDialog(Product product) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true,
       builder: (context) => CreatebutttonWidget(
         product: product,
         onProductCreated: () {
           Navigator.pop(context);
-          // Products will be updated automatically via stream
         },
       ),
     );
@@ -105,116 +91,12 @@ class _HomeScreenState extends State<HomeScreen> {
         cancelText: 'Cancel',
       ),
     );
-
-    if (confirmed == true) {
+    if (mounted == true) {
       await _deleteProduct(product.id);
     }
   }
 
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        centerTitle: true,
-        title: const Text(
-          "Product Manager",
-          style: TextStyle(color: Colors.white),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh, color: Colors.white),
-            onPressed: _loadProducts,
-          ),
-        ],
-      ),
-      body: _buildBody(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showCreateDialog,
-        backgroundColor: Colors.blue,
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-    );
-  }
-
-  Widget _buildBody() {
-    if (_isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-
-    if (_error != null) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.error_outline,
-              size: 64,
-              color: Colors.red[300],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Error loading products',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              _error!,
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _loadProducts,
-              child: const Text('Retry'),
-            ),
-          ],
-        ),
-      );
-    }
-
-    if (_products.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.shopping_cart_outlined,
-              size: 64,
-              color: Colors.grey[400],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'No products yet',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Add your first product using the + button',
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      );
-    }
-
-    return RefreshIndicator(
-      onRefresh: () async => _loadProducts(),
-      child: ListView.builder(
-        padding: const EdgeInsets.all(8),
-        itemCount: _products.length,
-        itemBuilder: (context, index) {
-          final product = _products[index];
-          return ProductCard(
-            product: product,
-            onEdit: () => _showEditDialog(product),
-            onDelete: () => _showDeleteConfirmation(product),
-          );
-        },
-      ),
-    );
+    return const Placeholder();
   }
 }

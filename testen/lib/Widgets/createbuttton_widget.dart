@@ -1,6 +1,3 @@
-
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -111,7 +108,8 @@ class _CreatebutttonWidgetState extends State<CreatebutttonWidget> {
                 _takePhoto();
               },
             ),
-            if (_selectedImage != null || (_isEditMode && widget.product!.imageUrl.isNotEmpty))
+            if (_selectedImage != null ||
+                (_isEditMode && widget.product!.imageUrl.isNotEmpty))
               ListTile(
                 leading: const Icon(Icons.delete),
                 title: const Text('Remove Image'),
@@ -132,9 +130,9 @@ class _CreatebutttonWidgetState extends State<CreatebutttonWidget> {
     setState(() {
       _error = message;
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _saveProduct() async {
@@ -148,14 +146,17 @@ class _CreatebutttonWidgetState extends State<CreatebutttonWidget> {
     try {
       final title = _titleController.text.trim();
       final price = double.parse(_priceController.text.trim());
-      
+
       if (_isEditMode) {
         // Edit existing product
         final updatedProduct = widget.product!.copyWith(
           title: title,
           price: price,
         );
-        await _productService.updateProduct(updatedProduct, _selectedImage);
+        await _productService.updateProduct(
+          updatedProduct,
+          _selectedImage,
+        );
       } else {
         // Create new product
         final newProduct = Product(
@@ -171,7 +172,11 @@ class _CreatebutttonWidgetState extends State<CreatebutttonWidget> {
         widget.onProductCreated?.call();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(_isEditMode ? 'Product updated successfully' : 'Product created successfully'),
+            content: Text(
+              _isEditMode
+                  ? 'Product updated successfully'
+                  : 'Product created successfully',
+            ),
           ),
         );
       }
@@ -281,10 +286,16 @@ class _CreatebutttonWidgetState extends State<CreatebutttonWidget> {
                           width: 20,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white,
+                            ),
                           ),
                         )
-                      : Text(_isEditMode ? 'Update Product' : 'Create Product'),
+                      : Text(
+                          _isEditMode
+                              ? 'Update Product'
+                              : 'Create Product',
+                        ),
                 ),
                 const SizedBox(height: 16),
               ],
@@ -378,18 +389,11 @@ class _CreatebutttonWidgetState extends State<CreatebutttonWidget> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(
-          Icons.add_photo_alternate,
-          size: 48,
-          color: Colors.grey[400],
-        ),
+        Icon(Icons.add_photo_alternate, size: 48, color: Colors.grey[400]),
         const SizedBox(height: 8),
         Text(
           'Tap to add image',
-          style: TextStyle(
-            color: Colors.grey[600],
-            fontSize: 16,
-          ),
+          style: TextStyle(color: Colors.grey[600], fontSize: 16),
         ),
       ],
     );
