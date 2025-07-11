@@ -1,8 +1,9 @@
 import 'dart:io';
+import 'package:crud/models/product_model.dart';
+import 'package:crud/services/firebase_product_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../models/product_model.dart';
-import '../services/firebase_product_service.dart';
+
 
 class CreatebutttonWidget extends StatefulWidget {
   final Product? product; // null = create mode, not null = edit mode

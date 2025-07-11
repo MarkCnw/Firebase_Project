@@ -1,9 +1,9 @@
+import 'package:crud/models/product_model.dart';
+import 'package:crud/services/firebase_product_service.dart';
+import 'package:crud/widgets/confirm_dialog.dart';
+import 'package:crud/widgets/createbuttton_widget.dart';
+import 'package:crud/widgets/product_card.dart';
 import 'package:flutter/material.dart';
-import '../models/product_model.dart';
-import '../services/firebase_product_service.dart';
-import '../widgets/createbuttton_widget.dart';
-import '../widgets/product_card.dart';
-import '../widgets/confirm_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

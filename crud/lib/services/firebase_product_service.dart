@@ -1,8 +1,10 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crud/models/product_model.dart';
+import 'package:crud/services/product_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import '../models/product_model.dart';
-import 'product_service.dart';
+
 
 class FirebaseProductService implements ProductService {
   final productRef = FirebaseFirestore.instance.collection('products');
