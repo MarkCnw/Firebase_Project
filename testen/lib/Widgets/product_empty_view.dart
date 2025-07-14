@@ -11,7 +11,7 @@ class ProductEmptyView extends StatelessWidget {
     required this.description,
   }) : super(key: key);
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return Center(
       child: Column(
@@ -23,16 +23,13 @@ class ProductEmptyView extends StatelessWidget {
             color: Colors.grey[400],
           ),
           const SizedBox(height: 16),
-          Text(
-            text,
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
+          Text(text, style: Theme.of(context).textTheme.headlineSmall),
           SizedBox(height: 8),
           Text(
             description,
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
-          )
+          ),
         ],
       ),
     );

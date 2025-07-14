@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:testen/Services/firebase_product_service.dart';
+import 'package:testen/Widgets/confirm_dialog.dart';
+import 'package:testen/Widgets/createbuttton_widget.dart';
+import 'package:testen/Widgets/product_empty_view.dart';
 import 'package:testen/Widgets/product_error_view.dart';
-
 import 'package:testen/Widgets/product_list.dart';
-import '../models/product_model.dart';
-import '../services/firebase_product_service.dart';
-import '../widgets/createbuttton_widget.dart';
-import '../widgets/confirm_dialog.dart';
+import 'package:testen/models/product_model.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -143,35 +144,16 @@ class _HomeScreenState extends State<HomeScreen> {
       return const Center(child: CircularProgressIndicator());
     }
 
+    // ย้ายส่วนแสดง "product_error_view.dart"
     if (_error != null) {
-      // ย้ายส่วนแสดง "product_error_view.dart"
       return ProductErrorView(error: _error!, onRetry: _loadProducts);
     }
 
+    // ย้ายส่วนแสดง "product_empty_view.dart"
     if (_products.isEmpty) {
-      // ย้ายส่วนแสดง "product_empty_view.dart"
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.shopping_cart_outlined,
-              size: 64,
-              color: Colors.grey[400],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'No products yet',
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Add your first product using the + button',
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
+      return ProductEmptyView(
+        text: 'No product',
+        description: 'Add your First product using the + button',
       );
     }
 
