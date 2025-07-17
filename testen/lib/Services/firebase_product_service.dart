@@ -5,9 +5,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:testen/Services/product_service.dart';
 import 'package:testen/models/product_model.dart';
 
-
-
-
 class FirebaseProductService implements ProductService {
   final productRef = FirebaseFirestore.instance.collection('products');
 
@@ -15,7 +12,9 @@ class FirebaseProductService implements ProductService {
   Future<void> createProduct(Product product, File? imageFile) async {
     String imageUrl = '';
     if (imageFile != null) {
-      final ref = FirebaseStorage.instance.ref().child('product_images/${product.id}.jpg');
+      final ref = FirebaseStorage.instance.ref().child(
+        'product_images/${product.id}.jpg',
+      );
       await ref.putFile(imageFile);
       imageUrl = await ref.getDownloadURL();
     }
@@ -28,7 +27,9 @@ class FirebaseProductService implements ProductService {
   Future<void> updateProduct(Product product, File? newImageFile) async {
     String imageUrl = product.imageUrl;
     if (newImageFile != null) {
-      final ref = FirebaseStorage.instance.ref().child('product_images/${product.id}.jpg');
+      final ref = FirebaseStorage.instance.ref().child(
+        'product_images/${product.id}.jpg',
+      );
       await ref.putFile(newImageFile);
       imageUrl = await ref.getDownloadURL();
     }
@@ -40,13 +41,18 @@ class FirebaseProductService implements ProductService {
   @override
   Future<void> deleteProduct(String id) async {
     await productRef.doc(id).delete();
-    await FirebaseStorage.instance.ref().child('product_images/$id.jpg').delete();
+    await FirebaseStorage.instance
+        .ref()
+        .child('product_images/$id.jpg')
+        .delete();
   }
 
   @override
   Stream<List<Product>> getProducts() {
     return productRef.snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) => Product.fromMap(doc.data())).toList();
+      return snapshot.docs
+          .map((doc) => Product.fromMap(doc.data()))
+          .toList();
     });
   }
 }

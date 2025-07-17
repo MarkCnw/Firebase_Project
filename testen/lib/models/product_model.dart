@@ -57,6 +57,9 @@ class Product {
 
   @override
   int get hashCode {
-    return id.hashCode ^ title.hashCode ^ imageUrl.hashCode ^ price.hashCode;
+    return id.hashCode ^
+        title.hashCode ^
+        imageUrl.hashCode ^
+        price.hashCode;
   }
 }
