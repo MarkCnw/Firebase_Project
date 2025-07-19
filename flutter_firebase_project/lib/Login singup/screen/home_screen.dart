@@ -16,6 +16,16 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
+              "สวัสดี",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+            ),
+            SizedBox(height: 15),
+            Text(
               "Congratulation\n You have Sussefully Logged in",
               textAlign: TextAlign.center,
               style: TextStyle(
