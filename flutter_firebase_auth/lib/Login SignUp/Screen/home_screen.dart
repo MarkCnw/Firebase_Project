@@ -19,6 +19,12 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
+                "สวัสดี",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.blue),
+              ),
+              const SizedBox(height: 15),
+              const Text(
                 "Congratulations!\nYou have successfully logged in",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
