@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:testen/Services/firebase_product_service.dart';
-import 'package:testen/Widgets/confirm_dialog.dart';
+import 'package:testen/Screens/widgets/confirm_dialog.dart';
 import 'package:testen/Widgets/createbuttton_widget.dart';
-import 'package:testen/Widgets/product_empty_view.dart';
-import 'package:testen/Widgets/product_error_view.dart';
-import 'package:testen/Widgets/product_list.dart';
+import 'package:testen/Screens/widgets/product_empty_view.dart';
+import 'package:testen/Screens/widgets/product_error_view.dart';
+import 'package:testen/Screens/widgets/product_list.dart';
 import 'package:testen/models/product_model.dart';
 
 
