@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:testen/Services/firebase_product_service.dart';
 import 'package:testen/Screens/widgets/confirm_dialog.dart';
-import 'package:testen/features/createbuttton_widget.dart';
+import 'package:testen/features/create/create_product_dialog.dart';
+
 import 'package:testen/Screens/widgets/product_empty_view.dart';
 import 'package:testen/Screens/widgets/product_error_view.dart';
 import 'package:testen/Screens/widgets/product_list.dart';
@@ -74,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (context) => CreatebutttonWidget(
+      builder: (context) => CreateProductDialog(
         onProductCreated: () {
           Navigator.pop(context);
           // Products will be updated automatically via stream
@@ -87,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (context) => CreatebutttonWidget(
+      builder: (context) => CreateProductDialog(
         product: product,
         onProductCreated: () {
           Navigator.pop(context);

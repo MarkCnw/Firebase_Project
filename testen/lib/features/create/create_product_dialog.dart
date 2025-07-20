@@ -8,21 +8,21 @@ import 'package:testen/features/create/submit_button_widget.dart';
 
 import 'package:testen/models/product_model.dart';
 
-class CreatebutttonWidget extends StatefulWidget {
+class CreateProductDialog extends StatefulWidget {
   final Product? product; // null = create mode, not null = edit mode
   final VoidCallback? onProductCreated;
 
-  const CreatebutttonWidget({
+  const CreateProductDialog({
     super.key,
     this.product,
     this.onProductCreated,
   });
 
   @override
-  State<CreatebutttonWidget> createState() => _CreatebutttonWidgetState();
+  State<CreateProductDialog> createState() => _CreateProductDialogState();
 }
 
-class _CreatebutttonWidgetState extends State<CreatebutttonWidget> {
+class _CreateProductDialogState extends State<CreateProductDialog> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _priceController = TextEditingController();
@@ -92,18 +92,7 @@ class _CreatebutttonWidgetState extends State<CreatebutttonWidget> {
         await _productService.createProduct(newProduct, _selectedImage);
       }
 
-      if (mounted) {
-        widget.onProductCreated?.call();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              _isEditMode
-                  ? 'Product updated successfully'
-                  : 'Product created successfully',
-            ),
-          ),
-        );
-      }
+      
     } catch (e) {
       _showError('Error saving product: $e');
     } finally {
