@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ConfirmDialog extends StatelessWidget {
-  final String title;
+  final String title;     
   final String content;
   final String confirmText;
   final String cancelText;
   final Color? confirmColor;
-
   const ConfirmDialog({
     super.key,
     required this.title,
