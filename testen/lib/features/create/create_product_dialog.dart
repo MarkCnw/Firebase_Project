@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+
 import 'package:testen/Services/firebase_product_service.dart';
 import 'package:testen/features/create/image_picker_widget.dart';
 import 'package:testen/features/create/product_form_widget.dart';
@@ -92,7 +93,18 @@ class _CreateProductDialogState extends State<CreateProductDialog> {
         await _productService.createProduct(newProduct, _selectedImage);
       }
 
-      
+      if (mounted) {
+        widget.onProductCreated?.call();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              _isEditMode
+                  ? 'Product updated successfully'
+                  : 'Product created successfully',
+            ),
+          ),
+        );
+      }
     } catch (e) {
       _showError('Error saving product: $e');
     } finally {
