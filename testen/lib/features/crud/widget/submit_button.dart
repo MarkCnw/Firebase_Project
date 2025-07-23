@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class SubmitButtonWidget extends StatelessWidget {
+class SubmitButton extends StatelessWidget {
+  final bool isEditMode;
   final bool isLoading;
-  final String buttonText;
-  final VoidCallback? onPressed; // ต้องเป็น VoidCallback
+  final VoidCallback onPressed;
 
-  const SubmitButtonWidget({
+  const SubmitButton({
     Key? key,
+    required this.isEditMode,
     required this.isLoading,
-    required this.buttonText,
-    this.onPressed,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -30,7 +30,7 @@ class SubmitButtonWidget extends StatelessWidget {
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
               ),
             )
-          : Text(buttonText),
+          : Text(isEditMode ? 'Update Product' : 'Create Product'),
     );
   }
 }

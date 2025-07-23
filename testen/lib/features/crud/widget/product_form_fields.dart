@@ -1,14 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-class ProductFormWidget extends StatelessWidget {
-  final TextEditingController titleController;
-  final TextEditingController priceController;
+class ProductFormFields extends StatelessWidget {
+  final TextEditingController title;
+  final TextEditingController price;
 
-  const ProductFormWidget({
+  const ProductFormFields({
     Key? key,
-    required this.titleController,
-    required this.priceController,
+    required this.title,
+    required this.price,
   }) : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class ProductFormWidget extends StatelessWidget {
       children: [
         // Title Field
         TextFormField(
-          controller: titleController,
+          controller: title,
           decoration: const InputDecoration(
             labelText: 'Product Title',
             hintText: 'Enter product name',
@@ -39,7 +39,7 @@ class ProductFormWidget extends StatelessWidget {
 
         // Price Field
         TextFormField(
-          controller: priceController,
+          controller: price,
           decoration: const InputDecoration(
             labelText: 'Price (\$)',
             hintText: 'Enter price',
@@ -61,7 +61,8 @@ class ProductFormWidget extends StatelessWidget {
             return null;
           },
         ),
-        const SizedBox(height: 24),
+
+        const SizedBox(height: 16),
       ],
     );
   }

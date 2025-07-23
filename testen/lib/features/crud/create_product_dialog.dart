@@ -1,33 +1,33 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:testen/Services/firebase_product_service.dart';
-import 'package:testen/features/create/image_picker_widget.dart';
-import 'package:testen/features/create/product_form_widget.dart';
-import 'package:testen/features/create/submit_button_widget.dart';
-
+import 'package:testen/features/crud/widget/form_header.dart';
+import 'package:testen/features/crud/widget/image_section_widget.dart';
+import 'package:testen/features/crud/widget/product_form_fields.dart';
+import 'package:testen/features/crud/widget/submit_button.dart';
 import 'package:testen/models/product_model.dart';
 
-class CreateProductDialog extends StatefulWidget {
+class CreatebutttonWidget extends StatefulWidget {
   final Product? product; // null = create mode, not null = edit mode
   final VoidCallback? onProductCreated;
 
-  const CreateProductDialog({
+  const CreatebutttonWidget({
     super.key,
     this.product,
     this.onProductCreated,
   });
 
   @override
-  State<CreateProductDialog> createState() => _CreateProductDialogState();
+  State<CreatebutttonWidget> createState() => _CreatebutttonWidgetState();
 }
 
-class _CreateProductDialogState extends State<CreateProductDialog> {
+class _CreatebutttonWidgetState extends State<CreatebutttonWidget> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _priceController = TextEditingController();
   final _productService = FirebaseProductService();
+  final _imagePicker = ImagePicker();
 
   File? _selectedImage;
   bool _isLoading = false;
@@ -49,6 +49,84 @@ class _CreateProductDialogState extends State<CreateProductDialog> {
     _titleController.dispose();
     _priceController.dispose();
     super.dispose();
+  }
+
+  Future<void> _pickImage() async {
+    try {
+      final XFile? image = await _imagePicker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 800,
+        maxHeight: 600,
+        imageQuality: 80,
+      );
+
+      if (image != null) {
+        setState(() {
+          _selectedImage = File(image.path);
+        });
+      }
+    } catch (e) {
+      _showError('Error picking image: $e');
+    }
+  }
+
+  Future<void> _takePhoto() async {
+    try {
+      final XFile? image = await _imagePicker.pickImage(
+        source: ImageSource.camera,
+        maxWidth: 800,
+        maxHeight: 600,
+        imageQuality: 80,
+      );
+
+      if (image != null) {
+        setState(() {
+          _selectedImage = File(image.path);
+        });
+      }
+    } catch (e) {
+      _showError('Error taking photo: $e');
+    }
+  }
+
+  void _showImagePicker() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Wrap(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.photo_library),
+              title: const Text('Choose from Gallery'),
+              onTap: () {
+                Navigator.pop(context);
+                _pickImage();
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_camera),
+              title: const Text('Take Photo'),
+              onTap: () {
+                Navigator.pop(context);
+                _takePhoto();
+              },
+            ),
+            if (_selectedImage != null ||
+                (_isEditMode && widget.product!.imageUrl.isNotEmpty))
+              ListTile(
+                leading: const Icon(Icons.delete),
+                title: const Text('Remove Image'),
+                onTap: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    _selectedImage = null;
+                  });
+                },
+              ),
+          ],
+        ),
+      ),
+    );
   }
 
   void _showError(String message) {
@@ -132,55 +210,33 @@ class _CreateProductDialogState extends State<CreateProductDialog> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // Header
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _isEditMode ? 'Edit Product' : 'Create Product',
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                    IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.close),
-                    ),
-                  ],
-                ),
+                FormHeader(onEdit: _isEditMode),
                 const SizedBox(height: 16),
 
-                ImagePickerWidget(
-                  initialImage: _selectedImage,
-                  networkImageUrl: _isEditMode
-                      ? widget.product?.imageUrl
-                      : null,
-                  height: 200,
-                  onImageChanged: (File? image) {
-                    setState(() {
-                      _selectedImage = image;
-                    });
-                  },
-                ),
-
                 // Image Section
+                ImageSectionWidget(
+                  selectedImage: _selectedImage,
+                  imageUrl: widget.product?.imageUrl,
+                  onPickImage: _showImagePicker,
+                  onRemoveImage: () =>
+                      setState(() => _selectedImage = null),
+                ),
                 const SizedBox(height: 16),
 
                 // Title Field
-                ProductFormWidget(
-                  titleController: _titleController,
-                  priceController: _priceController,
+                ProductFormFields(
+                  title: _titleController,
+                  price: _priceController,
                 ),
+
+                // Price Field
                 const SizedBox(height: 24),
 
                 // Save Button
-                SubmitButtonWidget(
+                SubmitButton(
+                  isEditMode: _isEditMode,
                   isLoading: _isLoading,
-                  buttonText: _isEditMode
-                      ? 'Update Product'
-                      : 'Create Product',
-                  onPressed: _isLoading
-                      ? null
-                      : () {
-                          _saveProduct(); // เรียก _saveProduct() โดยไม่ใช้ async ใน onPressed
-                        },
+                  onPressed: _saveProduct,
                 ),
                 const SizedBox(height: 16),
               ],
