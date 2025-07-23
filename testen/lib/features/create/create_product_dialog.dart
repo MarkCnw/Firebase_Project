@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:testen/Services/firebase_product_service.dart';
-import 'package:testen/features/crud/widget/form_header.dart';
-import 'package:testen/features/crud/widget/image_section_widget.dart';
-import 'package:testen/features/crud/widget/product_form_fields.dart';
-import 'package:testen/features/crud/widget/submit_button.dart';
+import 'package:testen/features/create/widget/form_header.dart';
+import 'package:testen/features/create/widget/image_section_widget.dart';
+import 'package:testen/features/create/widget/product_form_fields.dart';
+import 'package:testen/features/create/widget/submit_button.dart';
 import 'package:testen/models/product_model.dart';
 
 class CreatebutttonWidget extends StatefulWidget {
